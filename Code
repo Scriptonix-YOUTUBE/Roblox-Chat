@@ -1,0 +1,537 @@
+--[[
+    
+    Made by scriptonix#6957 (https://www.youtube.com/channel/UCTXnMFStFmFM0rFgoX0PjXQ).
+    
+    (Much appreciated if you could give me credit if you are using this in a gui or something!)
+   
+--]]
+
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local Frame_3 = Instance.new("Frame")
+local UIGridLayout = Instance.new("UIGridLayout")
+local copyplr = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local TextBox = Instance.new("TextBox")
+local TextButton = Instance.new("TextButton")
+local answer = Instance.new("Frame")
+local TextLabel_2 = Instance.new("TextLabel")
+local TextBox_2 = Instance.new("TextBox")
+local TextButton_2 = Instance.new("TextButton")
+local jump = Instance.new("Frame")
+local TextLabel_3 = Instance.new("TextLabel")
+local TextBox_3 = Instance.new("TextBox")
+local TextButton_3 = Instance.new("TextButton")
+local rude = Instance.new("Frame")
+local TextLabel_4 = Instance.new("TextLabel")
+local TextBox_4 = Instance.new("TextBox")
+local TextButton_4 = Instance.new("TextButton")
+local annoy = Instance.new("Frame")
+local TextLabel_5 = Instance.new("TextLabel")
+local TextBox_5 = Instance.new("TextBox")
+local TextButton_5 = Instance.new("TextButton")
+local sub = Instance.new("Frame")
+local sub_2 = Instance.new("ImageButton")
+local TextLabel_6 = Instance.new("TextLabel")
+local exit = Instance.new("ImageButton")
+local TextLabel_7 = Instance.new("TextLabel")
+
+local r = {'WHO CARES','STHU','STHU NOBODY CARES','NOBODY CARES','WHO THE HELL CARES','U SOUND LIKE A KID','MIC UP KID','MIC UP','MIC THE HELL UP','CRY ABOUT IT','UR TRASH','U POO POO','IF A DUMBSTER WAS A PERSON IT WOULD BE YOU','U LEGIT TRASH','GO CRY ABOUT IT','CRY','U R CHILDISH'}
+
+local function startof(String,String2)
+	return (String:sub(1,-(1+(#String - #String2))) == String2) or false
+end
+
+local HttpService = game:GetService'HttpService'
+local lower = string.lower
+
+local JoinServer = function(Code)
+    return syn.request({
+        Url = 'http://127.0.0.1:6463/rpc?v=1',
+        Method = 'POST',
+        Body = HttpService:JSONEncode({
+            cmd = 'INVITE_BROWSER',
+            args = {
+                code = Code
+            },
+        
+            nonce = lower(HttpService:GenerateGUID(false))
+        }),
+        Headers = {
+            ['Content-Type'] = 'application/json',
+            ['Origin'] = 'https://discord.com'
+        }
+    })
+end
+
+
+local function getplayer(t)
+	local a = {}
+	for _, v in pairs(game.Players:GetPlayers()) do
+		if string.lower(t.Text) ~= "others" and t.Text ~= "" and startof(string.lower(v.Name),string.lower(t.Text)) then
+			table.insert(a,v)
+		elseif string.lower(t.Text) == "others" and v ~= game.Players.LocalPlayer then
+			table.insert(a,v)
+		end
+	end
+	return a
+end
+
+local function chat(message)
+
+
+	local function thing(s)
+		for _, v in pairs(s:GetChildren()) do
+			if v:IsA("ScreenGui") and v:FindFirstChild("Frame") and v:FindFirstChild("Frame"):FindFirstChild("ChatBarParentFrame") then
+				return v
+			end
+		end
+	end
+	
+	local player = game.Players.LocalPlayer
+	local c = thing(player.PlayerGui)
+	local bar = c.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+	local text = bar.Text
+	bar:CaptureFocus()
+	bar.Text = message
+	bar:ReleaseFocus(true)
+	bar:CaptureFocus()
+	bar.Text = text
+	bar:ReleaseFocus()
+end
+
+local function first3()
+	local n = game.Players.LocalPlayer.Name
+	local x = #n - 3
+	return string.sub(n,1,-(x+1))
+end
+
+ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 0.500
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.120060787, 0, 0.205555558, 0)
+Frame.Size = UDim2.new(0, 303, 0, 45)
+Frame.Active = true
+Frame.Selectable = true
+Frame.Draggable = true
+
+Frame_2.Parent = Frame
+Frame_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame_2.BackgroundTransparency = 0.500
+Frame_2.BorderSizePixel = 0
+Frame_2.Size = UDim2.new(0, 303, 0, 358)
+
+Frame_3.Parent = Frame_2
+Frame_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_3.BackgroundTransparency = 1.000
+Frame_3.Position = UDim2.new(0, 0, 0.145251393, 0)
+Frame_3.Size = UDim2.new(0, 303, 0, 306)
+
+UIGridLayout.Parent = Frame_3
+UIGridLayout.FillDirection = Enum.FillDirection.Vertical
+UIGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout.CellSize = UDim2.new(0, 289, 0, 44)
+
+copyplr.Name = "copyplr"
+copyplr.Parent = Frame_3
+copyplr.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+copyplr.BorderSizePixel = 2
+copyplr.Size = UDim2.new(0, 100, 0, 100)
+
+TextLabel.Parent = copyplr
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Size = UDim2.new(0, 191, 0, 41)
+TextLabel.Font = Enum.Font.Ubuntu
+TextLabel.Text = "Copy user(s) chat messages"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+TextBox.Parent = copyplr
+TextBox.BackgroundColor3 = Color3.fromRGB(121, 121, 121)
+TextBox.Position = UDim2.new(0.685121119, 0, 0.181818187, 0)
+TextBox.Size = UDim2.new(0, 83, 0, 11)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.PlaceholderText = "Prefix is 'others'"
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox.TextScaled = true
+TextBox.TextSize = 14.000
+TextBox.TextWrapped = true
+
+TextButton.Parent = copyplr
+TextButton.BackgroundColor3 = Color3.fromRGB(17, 255, 0)
+TextButton.Position = UDim2.new(0.660899639, 0, 0.590909064, 0)
+TextButton.Size = UDim2.new(0, 97, 0, 15)
+TextButton.Font = Enum.Font.SourceSansBold
+TextButton.Text = "ENABLE"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextWrapped = true
+local en = false
+TextButton.MouseButton1Click:Connect(function()
+	if not en then
+		en = true
+		TextButton.Text = 'DISABLE'
+		TextButton.BackgroundColor3 = BrickColor.new("Bright red").Color
+		local plr = getplayer(TextBox)
+		for _, p in pairs(plr) do
+		    spawn(function()
+		        local oof = true
+			p.Chatted:Connect(function(m)
+				    if en and oof then
+				        chat('"' .. m .. '"')
+				    else
+				        oof = false
+				    end
+			end)
+			while en do wait() end 
+			oof = false
+		       end)
+		end
+	else
+		en = false
+		TextButton.Text = 'ENABLE'
+		TextButton.BackgroundColor3 = Color3.fromRGB(0,255,0)
+	end
+end)
+
+answer.Name = "answer"
+answer.Parent = Frame_3
+answer.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+answer.BorderSizePixel = 2
+answer.Size = UDim2.new(0, 100, 0, 100)
+
+TextLabel_2.Parent = answer
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.Position = UDim2.new(0.0207612459, 0, 0, 0)
+TextLabel_2.Size = UDim2.new(0, 177, 0, 41)
+TextLabel_2.Font = Enum.Font.Ubuntu
+TextLabel_2.Text = "Bot response to user(s) saying greetings (e.g. sup,hello,etc..)"
+TextLabel_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_2.TextScaled = true
+TextLabel_2.TextSize = 14.000
+TextLabel_2.TextWrapped = true
+
+TextBox_2.Parent = answer
+TextBox_2.BackgroundColor3 = Color3.fromRGB(121, 121, 121)
+TextBox_2.Position = UDim2.new(0.685121119, 0, 0.181818187, 0)
+TextBox_2.Size = UDim2.new(0, 83, 0, 11)
+TextBox_2.Font = Enum.Font.SourceSans
+TextBox_2.PlaceholderText = "Prefix is 'others'"
+TextBox_2.Text = ""
+TextBox_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox_2.TextScaled = true
+TextBox_2.TextSize = 14.000
+TextBox_2.TextWrapped = true
+
+TextButton_2.Parent = answer
+TextButton_2.BackgroundColor3 = Color3.fromRGB(17, 255, 0)
+TextButton_2.Position = UDim2.new(0.660899639, 0, 0.590909064, 0)
+TextButton_2.Size = UDim2.new(0, 97, 0, 15)
+TextButton_2.Font = Enum.Font.SourceSansBold
+TextButton_2.Text = "ENABLE"
+TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.TextScaled = true
+TextButton_2.TextSize = 14.000
+TextButton_2.TextWrapped = true
+local ennnn = false
+TextButton_2.MouseButton1Click:Connect(function()
+	if not ennnn then
+		ennnn = true
+		TextButton_2.Text = 'DISABLE'
+		TextButton_2.BackgroundColor3 = BrickColor.new("Bright red").Color
+		local plr = getplayer(TextBox_2)
+		for _, p in pairs(plr) do
+		    spawn(function()
+		        local oof = true
+			p.Chatted:Connect(function(m)
+				    if ennnn and oof then
+				        local l = string.lower(m)
+					if string.find(l,'hi ') or string.find(l,'sup ') or string.find(l,'hello ') or l == 'sup' or l == 'hello' or l == 'hi' then
+						chat('Hello, ' .. p.Name .. '!')
+					end
+				    else
+				        oof = false
+				    end
+			end)
+			while ennnn do wait() end 
+			oof = false
+			end)
+		end
+	else
+		ennnn = false
+		TextButton_2.Text = 'ENABLE'
+		TextButton_2.BackgroundColor3 = Color3.fromRGB(0,255,0)
+	end
+end)
+
+jump.Name = "jump"
+jump.Parent = Frame_3
+jump.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+jump.BorderSizePixel = 2
+jump.Size = UDim2.new(0, 100, 0, 100)
+
+
+TextLabel_3.Parent = jump
+TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_3.BackgroundTransparency = 1.000
+TextLabel_3.Position = UDim2.new(0.0207612459, 0, 0, 0)
+TextLabel_3.Size = UDim2.new(0, 177, 0, 41)
+TextLabel_3.Font = Enum.Font.Ubuntu
+TextLabel_3.Text = "Repeat user(s) chat messages but backwards"
+TextLabel_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_3.TextScaled = true
+TextLabel_3.TextSize = 14.000
+TextLabel_3.TextWrapped = true
+
+
+TextBox_3.Parent = jump
+TextBox_3.BackgroundColor3 = Color3.fromRGB(121, 121, 121)
+TextBox_3.Position = UDim2.new(0.685121119, 0, 0.181818187, 0)
+TextBox_3.Size = UDim2.new(0, 83, 0, 11)
+TextBox_3.Font = Enum.Font.SourceSans
+TextBox_3.PlaceholderText = "Prefix is 'others'"
+TextBox_3.Text = ""
+TextBox_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox_3.TextScaled = true
+TextBox_3.TextSize = 14.000
+TextBox_3.TextWrapped = true
+
+TextButton_3.Parent = jump
+TextButton_3.BackgroundColor3 = Color3.fromRGB(17, 255, 0)
+TextButton_3.Position = UDim2.new(0.660899639, 0, 0.590909064, 0)
+TextButton_3.Size = UDim2.new(0, 97, 0, 15)
+TextButton_3.Font = Enum.Font.SourceSansBold
+TextButton_3.Text = "ENABLE"
+TextButton_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_3.TextScaled = true
+TextButton_3.TextSize = 14.000
+TextButton_3.TextWrapped = true
+local enn = false
+TextButton_3.MouseButton1Click:Connect(function()
+	if not enn then
+		enn = true
+		TextButton_3.Text = 'DISABLE'
+		TextButton_3.BackgroundColor3 = BrickColor.new("Bright red").Color
+		local plr = getplayer(TextBox_3)
+		for _, p in pairs(plr) do
+		    spawn(function()
+		        local oof = true
+			p.Chatted:Connect(function(m)
+				    if enn and oof then
+				        chat(string.reverse(m))
+				    else
+				        oof = false
+				    end
+			end)
+			while enn do wait() end 
+			oof = false
+		       end)
+		end
+	else
+		enn = false
+		TextButton_3.Text = 'ENABLE'
+		TextButton_3.BackgroundColor3 = Color3.fromRGB(0,255,0)
+	end
+end)
+
+rude.Name = "rude"
+rude.Parent = Frame_3
+rude.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+rude.BorderSizePixel = 2
+rude.Size = UDim2.new(0, 100, 0, 100)
+
+TextLabel_4.Parent = rude
+TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.BackgroundTransparency = 1.000
+TextLabel_4.Position = UDim2.new(0.0207612459, 0, 0, 0)
+TextLabel_4.Size = UDim2.new(0, 177, 0, 41)
+TextLabel_4.Font = Enum.Font.Ubuntu
+TextLabel_4.Text = "Be rude to user(s)"
+TextLabel_4.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_4.TextScaled = true
+TextLabel_4.TextSize = 14.000
+TextLabel_4.TextWrapped = true
+
+TextBox_4.Parent = rude
+TextBox_4.BackgroundColor3 = Color3.fromRGB(121, 121, 121)
+TextBox_4.Position = UDim2.new(0.685121119, 0, 0.181818187, 0)
+TextBox_4.Size = UDim2.new(0, 83, 0, 11)
+TextBox_4.Font = Enum.Font.SourceSans
+TextBox_4.PlaceholderText = "Prefix is 'others'"
+TextBox_4.Text = ""
+TextBox_4.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox_4.TextScaled = true
+TextBox_4.TextSize = 14.000
+TextBox_4.TextWrapped = true
+
+TextButton_4.Parent = rude
+TextButton_4.BackgroundColor3 = Color3.fromRGB(17, 255, 0)
+TextButton_4.Position = UDim2.new(0.660899639, 0, 0.590909064, 0)
+TextButton_4.Size = UDim2.new(0, 97, 0, 15)
+TextButton_4.Font = Enum.Font.SourceSansBold
+TextButton_4.Text = "ENABLE"
+TextButton_4.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_4.TextScaled = true
+TextButton_4.TextSize = 14.000
+TextButton_4.TextWrapped = true
+local ennn = false
+TextButton_4.MouseButton1Click:Connect(function()
+	if not ennn then
+		ennn = true
+		TextButton_4.Text = 'DISABLE'
+		TextButton_4.BackgroundColor3 = BrickColor.new("Bright red").Color
+		local plr = getplayer(TextBox_4)
+		for _, p in pairs(plr) do
+		    spawn(function()
+		        local oof = true
+			p.Chatted:Connect(function(m)
+				    if ennn and oof then
+				        local message = r[math.random(#r)]
+					    chat(string.upper(p.Name) .. " " .. message)
+				    else
+				        oof = false
+				    end
+			end)
+			while ennn do wait() end 
+			oof = false
+		       end)
+		end
+	else
+		ennn = false
+		TextButton_4.Text = 'ENABLE'
+		TextButton_4.BackgroundColor3 = Color3.fromRGB(0,255,0)
+	end
+end)
+
+annoy.Name = "annoy"
+annoy.Parent = Frame_3
+annoy.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+annoy.BorderSizePixel = 2
+annoy.Size = UDim2.new(0, 100, 0, 100)
+
+TextLabel_5.Parent = annoy
+TextLabel_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_5.BackgroundTransparency = 1.000
+TextLabel_5.Position = UDim2.new(0.0207612459, 0, 0, 0)
+TextLabel_5.Size = UDim2.new(0, 177, 0, 41)
+TextLabel_5.Font = Enum.Font.Ubuntu
+TextLabel_5.Text = "Say '.' to literally EVERYTHING user(s) says"
+TextLabel_5.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_5.TextScaled = true
+TextLabel_5.TextSize = 14.000
+TextLabel_5.TextWrapped = true
+
+TextBox_5.Parent = annoy
+TextBox_5.BackgroundColor3 = Color3.fromRGB(121, 121, 121)
+TextBox_5.Position = UDim2.new(0.685121119, 0, 0.181818187, 0)
+TextBox_5.Size = UDim2.new(0, 83, 0, 11)
+TextBox_5.Font = Enum.Font.SourceSans
+TextBox_5.PlaceholderText = "Prefix is 'others'"
+TextBox_5.Text = ""
+TextBox_5.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox_5.TextScaled = true
+TextBox_5.TextSize = 14.000
+TextBox_5.TextWrapped = true
+
+TextButton_5.Parent = annoy
+TextButton_5.BackgroundColor3 = Color3.fromRGB(17, 255, 0)
+TextButton_5.Position = UDim2.new(0.660899639, 0, 0.590909064, 0)
+TextButton_5.Size = UDim2.new(0, 97, 0, 15)
+TextButton_5.Font = Enum.Font.SourceSansBold
+TextButton_5.Text = "ENABLE"
+TextButton_5.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_5.TextScaled = true
+TextButton_5.TextSize = 14.000
+TextButton_5.TextWrapped = true
+local ennnnn = false
+TextButton_5.MouseButton1Click:Connect(function()
+	if not ennnnn then
+		ennnnn = true
+		TextButton_5.Text = 'DISABLE'
+		TextButton_5.BackgroundColor3 = BrickColor.new("Bright red").Color
+		local plr = getplayer(TextBox_5)
+		for _, p in pairs(plr) do
+		    spawn(function()
+		        local oof = true
+			p.Chatted:Connect(function(m)
+				    if ennnnn and oof then
+				        chat('.')
+				    else
+				        oof = false
+				    end
+			end)
+			while ennnnn do wait() end 
+			oof = false
+		       end)
+		end
+	else
+		ennnnn = false
+		TextButton_5.Text = 'ENABLE'
+		TextButton_5.BackgroundColor3 = Color3.fromRGB(0,255,0)
+	end
+end)
+sub.Name = "sub"
+sub.Parent = Frame_3
+sub.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+sub.BackgroundTransparency = 1.000
+sub.BorderSizePixel = 2
+sub.Size = UDim2.new(0, 100, 0, 100)
+
+sub_2.Name = "sub"
+sub_2.Parent = sub
+sub_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+sub_2.Position = UDim2.new(0, 0, 0.0909999982, 0)
+sub_2.Size = UDim2.new(0, 50, 0, 50)
+sub_2.Image = "rbxassetid://7205009767"
+sub_2.MouseButton1Click:Connect(function()
+    JoinServer'XNtD3QJp'
+end)
+
+TextLabel_6.Parent = sub
+TextLabel_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_6.BackgroundTransparency = 1.000
+TextLabel_6.Position = UDim2.new(0.200692043, 0, 0.0909090936, 0)
+TextLabel_6.Size = UDim2.new(0, 230, 0, 50)
+TextLabel_6.Font = Enum.Font.Nunito
+TextLabel_6.Text = "Made by scriptonix#6957"
+TextLabel_6.TextColor3 = Color3.fromRGB(255, 247, 0)
+TextLabel_6.TextScaled = true
+TextLabel_6.TextSize = 14.000
+TextLabel_6.TextWrapped = true
+
+exit.Name = "exit"
+exit.Parent = Frame
+exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+exit.BackgroundTransparency = 1.000
+exit.Position = UDim2.new(0.854785502, 0, 0.0666666701, 0)
+exit.Size = UDim2.new(0, 38, 0, 38)
+exit.Image = "rbxassetid://7064643847"
+exit.MouseButton1Click:Connect(function()
+	Frame_2.Visible = not Frame_2.Visible
+end)
+
+TextLabel_7.Parent = Frame
+TextLabel_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_7.BackgroundTransparency = 1.000
+TextLabel_7.Size = UDim2.new(0, 259, 0, 45)
+TextLabel_7.Font = Enum.Font.ArialBold
+TextLabel_7.Text = "Chat Gui"
+TextLabel_7.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_7.TextScaled = true
+TextLabel_7.TextSize = 14.000
+TextLabel_7.TextStrokeTransparency = 0.000
+TextLabel_7.TextWrapped = true
