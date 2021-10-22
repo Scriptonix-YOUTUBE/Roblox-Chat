@@ -496,7 +496,7 @@ sub_2.Parent = sub
 sub_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 sub_2.Position = UDim2.new(0, 0, 0.0909999982, 0)
 sub_2.Size = UDim2.new(0, 50, 0, 50)
-sub_2.Image = "rbxassetid://7726826252"
+sub_2.Image = "http://www.roblox.com/asset/?id=7726826241"
 sub_2.MouseButton1Click:Connect(function()
     JoinServer('vAdr59vcys')
 end)
